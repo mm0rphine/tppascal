@@ -201,7 +201,7 @@ begin
     gotoxy(20,3);
     writeln('(\ /)');
     gotoxy(20,4);
-    writeln('( . .)  created by: m0rphine');
+    writeln('( . .)  ~ ');
     gotoxy(20,5);
     writeln('c(")(")');
 end;
