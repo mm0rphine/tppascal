@@ -11,7 +11,6 @@ type
         estado:boolean;
     end;
     f_estancia=file of reg_estancia;
-    arr_estancias=array of reg_estancia;
 const
     nombre='estancias.dat';
 
