@@ -3,10 +3,6 @@ unit arch_estancias;
 // notas
 {realizar:archivo provincias y listados}
 interface
-
-const
-    nombre='estancia.dat';
-    max=1000;
 type
     reg_estancia=record
         id,nombre,dueno,email,caract:string;
@@ -14,13 +10,9 @@ type
         capacidad,piscina:integer;
         estado:boolean;
     end;
-    arr_estancia=record
-        campo:string; {nombre de la estancia}
-        indice:integer; {posicion en el array}
-    end;
-
-    a_estancias=array[1..max] of arr_estancia; {array para ordenarlo alfabeticamente}
     f_estancia=file of reg_estancia;
+const 
+    nombre='estancias.dat';
 
 procedure crear_estancia(var arch:f_estancia);
 procedure abrir_estancia(var arch:f_estancia);
@@ -33,9 +25,6 @@ procedure alta_estancia(var arch:f_estancia);
 procedure baja_estancia(var arch:f_estancia);
 procedure modificar_estancia(var arch:f_estancia);
 procedure consultar_estancia(var arch:f_estancia);
-procedure init_array_estancia(var arr:a_estancias);
-procedure orden_nombre(var arch:f_estancia;var arr:a_estancias); {para ordenar por nombre de la estancia alfabeticamente}
-procedure listado1(var arch:f_estancia;arr:a_estancias); {listado orden alfabetico}
 procedure listado3(var arch:f_estancia); {listado estancias con piscina}
 procedure eliminar(var arch:f_estancia);
 
@@ -472,53 +461,6 @@ begin
                 end;
         end;
     close(arch);
-end;
-
-procedure init_array_estancia(var arr:a_estancias);
-var
-    i:integer;
-    r_arr:arr_estancia;
-begin
-    r_arr.campo:='';
-    r_arr.indice:=0;
-    for i:=1 to max do
-        begin
-            arr[i]:=r_arr;
-        end;
-end;
-
-procedure orden_nombre(var arch:f_estancia;var arr:a_estancias);
-var
-    estancia:reg_estancia;
-    r_arr:arr_estancia;
-    index,i,j,lim:integer;
-begin
-    index:=0;
-    abrir_estancia(arch);
-    lim:=filesize(arch);
-    close(arch);
-    for i:=1 to lim do
-        begin
-            leer_estancia(arch,estancia,i);
-            with arr[i] do 
-                begin
-                    campo:=estancia.nombre;
-                    indice:=index;
-                end;
-            index:=index+1;
-        end;
-    for i:=1 to lim-1 do
-        begin
-            for j:=1 to lim-i do
-                begin
-                    if arr[j].campo>arr[j].campo then
-                        begin
-                            r_arr:=arr[j];
-                            arr[j]:=arr[j+1];
-                            arr[j+1]:=r_arr;
-                        end;
-                end;
-        end;
 end;
 
 procedure listado3(var arch:f_estancia);
