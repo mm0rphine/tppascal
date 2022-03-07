@@ -34,7 +34,9 @@ procedure baja_estancia(var arch:f_estancia);
 procedure modificar_estancia(var arch:f_estancia);
 procedure consultar_estancia(var arch:f_estancia);
 procedure init_array_estancia(var arr:a_estancias);
-procedure listado3(var arch:f_estancia);
+procedure orden_nombre(var arch:f_estancia;var arr:a_estancias); {para ordenar por nombre de la estancia alfabeticamente}
+procedure listado1(var arch:f_estancia;arr:a_estancias); {listado orden alfabetico}
+procedure listado3(var arch:f_estancia); {listado estancias con piscina}
 procedure eliminar(var arch:f_estancia);
 
 implementation
@@ -482,6 +484,40 @@ begin
     for i:=1 to max do
         begin
             arr[i]:=r_arr;
+        end;
+end;
+
+procedure orden_nombre(var arch:f_estancia;var arr:a_estancias);
+var
+    estancia:reg_estancia;
+    r_arr:arr_estancia;
+    index,i,j,lim:integer;
+begin
+    index:=0;
+    abrir_estancia(arch);
+    lim:=filesize(arch);
+    close(arch);
+    for i:=1 to lim do
+        begin
+            leer_estancia(arch,estancia,i);
+            with arr[i] do 
+                begin
+                    campo:=estancia.nombre;
+                    indice:=index;
+                end;
+            index:=index+1;
+        end;
+    for i:=1 to lim-1 do
+        begin
+            for j:=1 to lim-i do
+                begin
+                    if arr[j].campo>arr[j].campo then
+                        begin
+                            r_arr:=arr[j];
+                            arr[j]:=arr[j+1];
+                            arr[j+1]:=r_arr;
+                        end;
+                end;
         end;
 end;
 
