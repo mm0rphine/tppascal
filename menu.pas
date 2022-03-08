@@ -187,7 +187,7 @@ begin
         until opcion in ['1'..'4'];
         clrscr;
         case opcion of
-        '3':listado3(file_estancia);
+        '1':clrscr;
         end
     until opcion='4';
     if opcion='4' then
