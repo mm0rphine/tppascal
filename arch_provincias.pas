@@ -3,7 +3,8 @@ unit arch_provincias;
 interface
 type
     reg_provincia=record
-        denominacion,cod:string;
+        denom,cod_provincia:string;
+        telmt:longint;
     end;
     f_provincia=file of reg_provincia;
     const
