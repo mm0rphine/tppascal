@@ -25,7 +25,6 @@ procedure alta_estancia(var arch:f_estancia);
 procedure baja_estancia(var arch:f_estancia);
 procedure modificar_estancia(var arch:f_estancia);
 procedure consultar_estancia(var arch:f_estancia);
-procedure listado3(var arch:f_estancia); {listado estancias con piscina}
 procedure eliminar(var arch:f_estancia);
 
 implementation
@@ -457,32 +456,6 @@ begin
                 begin
                     clrscr;
                     gotoxy(20,6);writeln('La estancia fue dada de baja.');
-                    readkey;
-                end;
-        end;
-    close(arch);
-end;
-
-procedure listado3(var arch:f_estancia);
-var
-    estancia:reg_estancia;
-begin
-    abrir_estancia(arch);
-    while not (eof(arch)) do 
-        begin
-            clrscr;
-            gotoxy(23,3);writeln('Listado de las estancias que poseen piscina.');
-            read(arch,estancia);
-            if (estancia.estado) and (estancia.piscina>0)then
-                begin
-                    gotoxy(23,5);
-                    write(estancia.nombre);
-                    readkey;
-                end
-            else
-                begin
-                    clrscr;
-                    gotoxy(20,6);writeln('No hay estancias que posean piscina.');
                     readkey;
                 end;
         end;
