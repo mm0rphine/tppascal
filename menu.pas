@@ -2,7 +2,7 @@ unit menu;
 
 interface
 uses
-    crt,arch_estancias,arch_provincias;
+    crt,arch_estancias,arch_provincias,listados;
 var
     file_estancia:f_estancia;
     file_provincia:f_provincia;
@@ -187,7 +187,9 @@ begin
         until opcion in ['1'..'4'];
         clrscr;
         case opcion of
-        '1':clrscr;
+        '1':nombre(file_estancia);
+        '2':clrscr;
+        '3':piscina(file_estancia);
         end
     until opcion='4';
     if opcion='4' then
