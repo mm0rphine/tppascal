@@ -55,23 +55,22 @@ procedure piscina(var arch:f_estancia);
 var
     estancia:reg_estancia;
 begin
-    clrscr;
     abrir_estancia(arch);
+    gotoxy(23,3);
+    writeln('Listado de las estancias que poseen piscina/s:');
     while not (eof(arch)) do
         begin
-            gotoxy(23,3);
-            writeln('Listado de las estancias que tienen piscina:');
+            clrscr;
             read(arch,estancia);
             if (estancia.estado) and (estancia.piscina>0) then
                 begin
-                    gotoxy(23,5);
-                    writeln(estancia.nombre);
+                    mostrar_estancia(estancia);
                 end
             else
                 begin
                     clrscr;
                     gotoxy(23,6);
-                    writeln('No hay estancias con piscina o estancias cargadas aun');
+                    writeln('No hay estancias con piscina');
                 end;
         end;
     close(arch);
