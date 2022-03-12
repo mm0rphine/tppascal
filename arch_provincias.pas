@@ -12,6 +12,8 @@ type
 
 procedure crear_provincia(var arch:f_provincia);
 procedure abrir_provincia(var arch:f_provincia);
+procedure leer_provincia(var arch:f_provincia;var reg:reg_provincia;indice:integer);
+procedure guardar_provincia(var arch:f_provincia;reg:reg_provincia;indice:integer);
 
 implementation
 uses
@@ -33,5 +35,17 @@ begin
     {$I-}
         reset(arch);
     {$I+}
+end;
+
+procedure leer_provincia(var arch:f_provincia;var reg:reg_provincia;indice:integer);
+begin
+    seek(arch,indice);
+    read(arch,reg);
+end;
+
+procedure guardar_provincia(var arch:f_provincia;reg:reg_provincia;indice:integer);
+begin
+    seek(arch,indice);
+    write(arch,reg);
 end;
 end.
