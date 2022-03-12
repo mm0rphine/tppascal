@@ -57,7 +57,7 @@ var
 begin
     abrir_estancia(arch);
     gotoxy(23,3);
-    writeln('Listado de las estancias que poseen piscina/s:');
+    writeln('Listado de las estancias que poseen piscina:');
     while not (eof(arch)) do
         begin
             clrscr;
@@ -70,7 +70,7 @@ begin
                 begin
                     clrscr;
                     gotoxy(23,6);
-                    writeln('No hay estancias con piscina');
+                    writeln('No hay estancias con piscina.');
                 end;
         end;
     close(arch);
