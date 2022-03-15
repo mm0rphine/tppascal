@@ -21,6 +21,7 @@ var
     opcion:char;
 begin
     crear_estancia(file_estancia);
+    crear_provincia(file_provincia);
     repeat
         clrscr;
         textcolor(13);

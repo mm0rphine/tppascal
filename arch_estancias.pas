@@ -229,7 +229,7 @@ begin
             estancia.estado:=true;
             guardar_estancia(arch,estancia,filesize(arch));
             clrscr;
-            gotoxy(20,6);writeln('La estancia fue dada de alta.');
+            textcolor(10);gotoxy(20,6);writeln('La estancia fue dada de alta.');textcolor(15);
             readkey;
         end
     else
