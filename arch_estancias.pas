@@ -18,6 +18,7 @@ procedure crear_estancia(var arch:f_estancia);
 procedure abrir_estancia(var arch:f_estancia);
 procedure leer_estancia(var arch:f_estancia;var reg:reg_estancia;indice:integer);
 procedure guardar_estancia(var arch:f_estancia;reg:reg_estancia;indice:integer);
+procedure pulsartecla;
 procedure mostrar_estancia(estancia:reg_estancia);
 function busqueda_id_estancia(var arch:f_estancia;buscado:string):integer; {secuencial}
 function busqueda_dni(var arch:f_estancia;buscado:longint):integer;
@@ -61,6 +62,16 @@ begin
     write(arch,reg);
 end;
 
+procedure pulsartecla;
+begin
+    gotoxy(16,10);
+    textcolor(15);
+    writeln('- Pulse cualquier tecla para continuar -');
+    readkey;
+    clrscr
+end;
+
+
 procedure mostrar_estancia(estancia:reg_estancia); {muestra los datos de la estancia}
 begin
     with estancia do
@@ -74,6 +85,7 @@ begin
             gotoxy(20,11);writeln('Caracteristicas de la estancia: ',estancia.caract);
             gotoxy(20,12);writeln('Piscinas que posee la estancia: ',estancia.piscina);
             gotoxy(20,13);writeln('Capcidad que posee la estancia: ',estancia.capacidad);
+            gotoxy(20,17);writeln('- Pulse cualquier tecla para continuar -');readkey;clrscr;
         end;
 end;
 
@@ -152,18 +164,18 @@ begin
                         if (x>-1) then
                             begin
                                 textcolor(12);
-                                gotoxy(20,16);writeln('× El DNI ingresado ya existe, intente nuevamente. ×');
+                                gotoxy(20,16);writeln('El DNI ingresado ya existe, intente nuevamente.');
                                 delay(1800);
-                                gotoxy(20,16);writeln('                                                   ');
+                                gotoxy(20,16);writeln('                                               ');
                                 textcolor(15);
                             end;
                     end
                 else
                     begin
                         textcolor(12);
-                        gotoxy(20,16);writeln('× El tipo de dato ingresado no es valido, intente nuevamente. ×');
+                        gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                         delay(1800);
-                        gotoxy(20,16);writeln('                                                                ');
+                        gotoxy(20,16);writeln('                                                             ');
                         textcolor(15);
                     end;
             until (x=-1) and (valdni=0);
@@ -181,9 +193,9 @@ begin
                 else
                     begin
                         textcolor(12);
-                        gotoxy(20,16);writeln('× El tipo de dato ingresado no es valido, intente nuevamente. ×');
+                        gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                         delay(1800);
-                        gotoxy(20,16);writeln('                                                                ');
+                        gotoxy(20,16);writeln('                                                           ');
                         textcolor(15);
                     end;
             until(valtel=0);
@@ -200,9 +212,9 @@ begin
                 else
                     begin
                         textcolor(12);
-                        gotoxy(20,16);writeln('× El tipo de dato ingresado no es valido, intente nuevamente. ×');
+                        gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                         delay(1800);
-                        gotoxy(20,16);writeln('                                                                ');
+                        gotoxy(20,16);writeln('                                                           ');
                         textcolor(15);
                     end;
             until(valpisc=0);
@@ -219,9 +231,9 @@ begin
                 else
                     begin
                         textcolor(12);
-                        gotoxy(20,16);writeln('× El tipo de dato ingresado no es valido, intente nuevamente. ×');
+                        gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                         delay(1800);
-                        gotoxy(20,16);writeln('                                                                ');
+                        gotoxy(20,16);writeln('                                                             ');
                         textcolor(15);
                     end;
             until(valcap=0);
@@ -230,7 +242,7 @@ begin
             guardar_estancia(arch,estancia,filesize(arch));
             clrscr;
             textcolor(10);gotoxy(20,6);writeln('La estancia fue dada de alta.');textcolor(15);
-            readkey;
+            pulsartecla;
         end
     else
         begin
@@ -238,13 +250,14 @@ begin
             if reg.estado then
                 begin
                     clrscr;
-                    gotoxy(20,6);writeln('La estancia con ese id ya existe.');
-                    readkey;
+                    gotoxy(20,6);textcolor(14);writeln('La estancia con ese id ya existe.');textcolor(15);
+                    pulsartecla;
                 end
             else
                 begin
                     clrscr;
-                    gotoxy(20,6);writeln('La estancia existe, pero fue dada de baja. ¿Darla de alta? s/n');
+                    gotoxy(20,6);textcolor(14);writeln(' La estancia existe, pero fue dada de baja.');
+                    gotoxy(26,8);textcolor(15);writeln('¿Desea darla de alta? s/n');
                     repeat
                         opcion:=readkey;
                     until opcion in ['s','n'];
@@ -255,14 +268,14 @@ begin
                             seek(arch,i);
                             write(arch,estancia);
                             clrscr;
-                            gotoxy(20,6);writeln('La estancia fue dada de alta.');
-                            readkey;
+                            gotoxy(20,6);textcolor(10);writeln('La estancia fue dada de alta.');textcolor(15);
+                            pulsartecla;
                         end;
                     if opcion ='n' then
                         begin
                             clrscr;
-                            gotoxy(20,6);writeln('La estancia no fue dada de alta.');
-                            readkey;
+                            gotoxy(20,6);textcolor(12);writeln('La estancia no fue dada de alta.');textcolor(15);
+                            pulsartecla;
                         end;
                 end;
         end;
@@ -283,8 +296,8 @@ begin
     if i=-1 then
         begin
             clrscr;
-            gotoxy(20,6);writeln('No existe una estancia con ese id.');
-            readkey;
+            gotoxy(20,6);textcolor(12);writeln('No existe una estancia con ese id.');textcolor(15);
+            pulsartecla;
         end
     else
         begin
@@ -296,8 +309,8 @@ begin
                     guardar_estancia(arch,estancia,i);
                 end;
             clrscr;
-            gotoxy(20,6);writeln('La estancia fue dada de baja.');
-            readkey;
+            gotoxy(20,6);textcolor(10);writeln('La estancia fue dada de baja.');textcolor(15);
+            pulsartecla;
         end;
     close(arch);
 end;
@@ -315,8 +328,8 @@ begin
     if i=-1 then
         begin
             clrscr;
-            gotoxy(20,6);writeln('No existe una estancia con ese id.');
-            readkey;
+            gotoxy(20,6);textcolor(12);writeln('No existe una estancia con ese id.');textcolor(15);
+            pulsartecla;
         end
     else
         begin
@@ -350,9 +363,9 @@ begin
                         else
                             begin
                                 textcolor(12);
-                                gotoxy(20,16);writeln('× El tipo de dato ingresado no es valido, intente nuevamente. ×');
+                                gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                                 delay(1800);
-                                gotoxy(20,16);writeln('                                                                ');
+                                gotoxy(20,16);writeln('                                                           ');
                                 textcolor(15);
                             end;
                     until (valdni=0);
@@ -368,9 +381,9 @@ begin
                         else
                             begin
                                 textcolor(12);
-                                gotoxy(20,16);writeln('× El tipo de dato ingresado no es valido, intente nuevamente. ×');
+                                gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                                 delay(1800);
-                                gotoxy(20,16);writeln('                                                                ');
+                                gotoxy(20,16);writeln('                                                           ');
                                 textcolor(15);
                             end;
                     until (valtel=0); 
@@ -385,9 +398,9 @@ begin
                         else
                             begin
                                 textcolor(12);
-                                gotoxy(20,16);writeln('× El tipo de dato ingresado no es valido, intente nuevamente. ×');
+                                gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                                 delay(1800);
-                                gotoxy(20,16);writeln('                                                                ');
+                                gotoxy(20,16);writeln('                                                           ');
                                 textcolor(15);
                             end;
                     until (valpisc=0);
@@ -402,9 +415,9 @@ begin
                         else
                             begin
                                 textcolor(12);
-                                gotoxy(20,16);writeln('× El tipo de dato ingresado no es valido, intente nuevamente. ×');
+                                gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                                 delay(1800); 
-                                gotoxy(20,16);writeln('                                                               ');
+                                gotoxy(20,16);writeln('                                                             ');
                                 textcolor(15);
                             end;
                     until valcap=0;
@@ -412,14 +425,14 @@ begin
                     i:=filepos(arch) - 1;
                     guardar_estancia(arch,estancia,i);
                     clrscr;
-                    gotoxy(20,6);writeln('Los datos fueron modificados.');
-                    readkey;
+                    gotoxy(20,6);textcolor(10);writeln('Los datos fueron modificados.');textcolor(15);
+                    pulsartecla;
                 end
             else
                 begin
                     clrscr;
-                    gotoxy(20,6);writeln('La estancia fue dada de baja.');
-                    readkey;
+                    gotoxy(13,6);textcolor(14);writeln('La estancia fue dada de baja, debe darla de alta.');textcolor(15);
+                    pulsartecla;
                 end;
         end;
     close(arch);
@@ -439,8 +452,8 @@ begin
     if i=-1 then
         begin
             clrscr;
-            gotoxy(20,6);writeln('No existe una estancia con ese id.');
-            readkey;
+            gotoxy(20,6);textcolor(12);writeln('No existe una estancia con ese id.');textcolor(15);
+            pulsartecla;
         end
     else
         begin
@@ -450,13 +463,12 @@ begin
                     clrscr;
                     gotoxy(20,3);writeln('Los datos de la estancia consultada son los siguientes:');
                     mostrar_estancia(estancia);
-                    readkey;
                 end
             else
                 begin
                     clrscr;
-                    gotoxy(20,6);writeln('La estancia fue dada de baja.');
-                    readkey;
+                    gotoxy(13,6);textcolor(14);writeln('La estancia fue dada de baja, debe darla de alta.');textcolor(15);
+                    pulsartecla;
                 end;
         end;
     close(arch);
