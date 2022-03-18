@@ -11,7 +11,6 @@ procedure principal;
 procedure abmc;
 procedure listados;
 procedure borrar;
-procedure dibujo;
 
 implementation
 
@@ -72,8 +71,6 @@ begin
     until opcion ='4';
     if opcion='4' then
         begin
-            dibujo;
-            delay(2100);
             clrscr;
             halt;
         end;
@@ -197,16 +194,6 @@ begin
         begin
             principal;
         end;
-end;
-
-procedure dibujo;
-begin
-    gotoxy(20,3);
-    writeln('(\ /)');
-    gotoxy(20,4);
-    writeln('( . .)  ~ ');
-    gotoxy(20,5);
-    writeln('c(")(")');
 end;
 
 procedure borrar;
