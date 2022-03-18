@@ -60,24 +60,14 @@ begin
     writeln('Listado de las estancias que poseen piscina:');
     while not (eof(arch)) do
         begin
-            clrscr;
             read(arch,estancia);
             if (estancia.estado) and (estancia.piscina>0) then
                 begin
                     mostrar_estancia(estancia);
-                end
-            else
-                begin
-                    clrscr;
-                    gotoxy(23,6);
-                    writeln('No hay estancias con piscina.');
                 end;
         end;
     close(arch);
-    readkey;
 end;
-
-
 
 end.
 
