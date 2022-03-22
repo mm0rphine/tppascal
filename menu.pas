@@ -6,6 +6,7 @@ uses
 var
     file_estancia:f_estancia;
     file_provincia:f_provincia;
+    color:integer;
 
 procedure principal;
 procedure abmc;
@@ -22,35 +23,35 @@ begin
     crear_estancia(file_estancia);
     crear_provincia(file_provincia);
     repeat
+        color:=0;
         clrscr;
-        textcolor(13);
         x:=15;
         y:=2;
         for i:=1 to 10 do
             begin
-                gotoxy(x,y);writeln('|');
-                y:=y+1;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                color:=color+1;y:=y+1;
             end;
         x:=16;
         y:=1;
         for i:=1 to 13 do
             begin
-                gotoxy(x,y);writeln('__');
-                x:=x+2;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                color:=color+1;x:=x+2;
             end;
         x:=42;
         y:=2;
         for i:= 1 to 10 do
             begin
-                gotoxy(x,y);writeln('|');
-                y:=y+1;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                y:=y+1;color:=color+1;
             end;
         x:=16;
         y:=11;
         for i:=1 to 13 do
             begin
-                gotoxy(x,y);writeln('__');
-                x:=x+2;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                x:=x+2;color:=color+1;
             end;
         textcolor(15);
         gotoxy(22,3);writeln('Menu Principal');
@@ -83,34 +84,33 @@ var
 begin
     repeat
         clrscr;
-        textcolor(13);
         x:=17;
         y:=3;
         for i:=1 to 11 do
             begin
-                gotoxy(x,y);writeln('|');
-                y:=y+1;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                y:=y+1;color:=color+1;
             end;
         x:=18;
         y:=2;
         for i:=1 to 16 do
             begin
-                gotoxy(x,y);writeln('__');
-                x:=x+2;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                x:=x+2;color:=color+1;
             end;
         x:=50;
         y:=3;
         for i:= 1 to 11 do
             begin
-                gotoxy(x,y);writeln('|');
-                y:=y+1;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                y:=y+1;color:=color+1;
             end;
         x:=18;
         y:=13;
         for i:=1 to 16 do
             begin
-                gotoxy(x,y);writeln('__');
-                x:=x+2;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                x:=x+2;color:=color+1;
             end;
         textcolor(15);
         gotoxy(29,4);writeln('Menu ABMC');
@@ -144,34 +144,33 @@ var
 begin
     repeat 
         clrscr;
-        textcolor(13);
         x:=17;
         y:=3;
         for i:=1 to 10 do
             begin
-                gotoxy(x,y);writeln('|');
-                y:=y+1;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                y:=y+1;color:=color+1;
             end;
         x:=18;
         y:=2;
         for i:=1 to 20 do
             begin
-                gotoxy(x,y);writeln('__');
-                x:=x+2;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                x:=x+2;color:=color+1;
             end;
         x:=58;
         y:=3;
         for i:= 1 to 10 do
             begin
-                gotoxy(x,y);writeln('|');
-                y:=y+1;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                y:=y+1;color:=color+1;
             end;
         x:=18;
         y:=12;
         for i:=1 to 20 do
             begin
-                gotoxy(x,y);writeln('__');
-                x:=x+2;
+                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                x:=x+2;color:=color+1;
             end;
         textcolor(15);
         gotoxy(30,4);writeln('Menu Listados');
@@ -221,8 +220,4 @@ begin
                 principal;
             end;
 end;
-
-
 end.
-
-
