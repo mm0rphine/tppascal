@@ -23,34 +23,34 @@ begin
     crear_estancia(file_estancia);
     crear_provincia(file_provincia);
     repeat
-        color:=0;
+        color:=1;
         clrscr;
-        x:=15;
-        y:=2;
-        for i:=1 to 10 do
+        x:=14;
+        y:=1;
+        for i:=1 to 11 do
             begin
-                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                gotoxy(x,y);textcolor(color);writeln('.');delay(8);
                 color:=color+1;y:=y+1;
             end;
         x:=16;
         y:=1;
-        for i:=1 to 13 do
+        for i:=1 to 14 do
             begin
-                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                gotoxy(x,y);textcolor(color);writeln('.');delay(8);
                 color:=color+1;x:=x+2;
             end;
         x:=42;
         y:=2;
         for i:= 1 to 10 do
             begin
-                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                gotoxy(x,y);textcolor(color);writeln('.');delay(8);
                 y:=y+1;color:=color+1;
             end;
         x:=16;
         y:=11;
         for i:=1 to 13 do
             begin
-                gotoxy(x,y);writeln('.');textcolor(color);delay(15);
+                gotoxy(x,y);textcolor(color);writeln('.');delay(8);
                 x:=x+2;color:=color+1;
             end;
         textcolor(15);
@@ -161,7 +161,7 @@ begin
         x:=58;
         y:=3;
         for i:= 1 to 10 do
-            begin
+           begin
                 gotoxy(x,y);writeln('.');textcolor(color);delay(15);
                 y:=y+1;color:=color+1;
             end;
@@ -220,4 +220,4 @@ begin
                 principal;
             end;
 end;
-end.
+end. 
