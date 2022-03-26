@@ -3,9 +3,6 @@ unit menu;
 interface
 uses
     crt,arch_estancias,arch_provincias,listados;
-var
-    file_estancia:f_estancia;
-    file_provincia:f_provincia;
 
 procedure principal;
 procedure abmc;
@@ -26,7 +23,7 @@ begin
         clrscr;
         x:=14;
         y:=1;
-        for i:=1 to 11 do
+       for i:=1 to 11 do
             begin
                 gotoxy(x,y);textcolor(color);writeln('.');
                 y:=y+1;color:=color+1;
@@ -185,8 +182,8 @@ begin
         until opcion in ['1'..'4'];
         clrscr;
         case opcion of
-        '1':nombre(file_estancia);
-        '2':clrscr;
+        '1':clrscr;
+        '2':provincia(file_estancia);
         '3':piscina(file_estancia);
         end
     until opcion='4';
@@ -210,9 +207,9 @@ begin
             begin
                 eliminar(file_estancia);
                 clrscr;
-                gotoxy(20,6);writeln('Borrando archivos..');
+                gotoxy(23,3);writeln('Borrando archivos..');
                 delay(1500);
-                gotoxy(20,6);writeln('Operacion realizada con exito.');
+                gotoxy(23,3);writeln('Operacion realizada con exito.');
                 delay(1000);
                 principal;
             end

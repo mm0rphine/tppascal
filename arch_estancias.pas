@@ -5,7 +5,7 @@ unit arch_estancias;
 interface
 type
     reg_estancia=record
-        id,nombre,dueno,email,caract:string;
+        id,nombre,dueno,email,caract,cod_prov:string;
         dni,tel:longint;
         capacidad,piscina:integer;
         estado:boolean;
@@ -13,12 +13,13 @@ type
     f_estancia=file of reg_estancia;
 const 
     nombre='estancias.dat';
+var
+    file_estancia:f_estancia;
 
 procedure crear_estancia(var arch:f_estancia);
 procedure abrir_estancia(var arch:f_estancia);
 procedure leer_estancia(var arch:f_estancia;var reg:reg_estancia;indice:integer);
 procedure guardar_estancia(var arch:f_estancia;reg:reg_estancia;indice:integer);
-procedure pulsartecla;
 procedure mostrar_estancia(estancia:reg_estancia);
 function busqueda_id_estancia(var arch:f_estancia;buscado:string):integer; {secuencial}
 function busqueda_dni(var arch:f_estancia;buscado:longint):integer;
@@ -27,10 +28,11 @@ procedure baja_estancia(var arch:f_estancia);
 procedure modificar_estancia(var arch:f_estancia);
 procedure consultar_estancia(var arch:f_estancia);
 procedure eliminar(var arch:f_estancia);
+procedure pulsartecla;
 
 implementation
 uses
-    crt;
+    crt,arch_provincias;
 
 procedure crear_estancia(var arch:f_estancia);
 begin
@@ -70,7 +72,6 @@ begin
     readkey;
     clrscr
 end;
-
 
 procedure mostrar_estancia(estancia:reg_estancia); {muestra los datos de la estancia}
 begin
@@ -238,6 +239,9 @@ begin
                     end;
             until(valcap=0);
             gotoxy(39,13);readln(estancia.caract);
+            {se cargan los datos del domicilio}
+            cargar_provincia(file_provincia);
+            estancia.cod_prov:=provincia.id;
             estancia.estado:=true;
             guardar_estancia(arch,estancia,filesize(arch));
             clrscr;

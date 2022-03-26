@@ -4,51 +4,58 @@ interface
 uses
     crt,arch_estancias;
 
-procedure nombre(var arch:f_estancia);
+procedure provincia(var arch:f_estancia);
 procedure piscina(var arch:f_estancia);
-procedure orden_alfabetico(var arch:f_estancia);
+function busqueda_codigo(var arch:f_estancia;buscado:string):integer;
 
 implementation
 
-procedure orden_alfabetico(var arch:f_estancia);
+{para buscar por codigo de la provincia y luego listar}
+function busqueda_codigo(var arch:f_estancia;buscado:string):integer;
 var
-    i,j,lim:integer;
-    r1,r2:reg_estancia;
+    estancia:reg_estancia;
+    encontrado:boolean;
 begin
-    lim:=filesize(arch)-1;
-    for i:=0 to lim-1 do
+    encontrado:=false;
+    seek(arch,0);
+    while(not eof(arch)) and (not encontrado) do
         begin
-            for j:=0  to lim-i do
-                begin
-                    seek(arch,j);
-                    read(arch,r1);
-                    seek(arch,j+1);
-                    read(arch,r2);
-                    if r1.nombre>r2.nombre then
-                        begin
-                            seek(arch,j+1);
-                            write(arch,r1);
-                            seek(arch,j);
-                            write(arch,r2);
-                        end;
-                end;
+            read(arch,estancia);
+            encontrado:=estancia.cod_prov = buscado;
         end;
+    if encontrado then
+        busqueda_codigo:=filepos(arch)-1
+    else
+        busqueda_codigo:=-1;
 end;
-    
-procedure nombre(var arch:f_estancia);
+
+procedure provincia(var arch:f_estancia);
 var
+    i:integer;
     estancia:reg_estancia;
 begin
     abrir_estancia(arch);
-    orden_alfabetico(arch);
-    while not (eof(arch)) do
+    gotoxy(23,3);writeln('Ingrese el codigo de la provincia:');
+    gotoxy(45,3);readln(estancia.cod_prov);
+    i:=busqueda_codigo(arch,estancia.cod_prov);
+    if i=-1 then
         begin
             clrscr;
-            read(arch,estancia);
-            mostrar_estancia(estancia);
+            gotoxy(23,3);writeln('No hay estancias en esa provincia.');   
+        end 
+    else
+        begin
+            clrscr;
+            gotoxy(23,3);writeln('Listado de las estancias de la provincia con codigo ',estancia.cod_prov,':');
+            while not (eof(arch)) do
+                begin
+                    read(arch,estancia);
+                    if (estancia.estado) then
+                        begin
+                            mostrar_estancia(estancia);
+                        end;
+                end;
         end;
-    close(arch);
-    readkey;
 end;
 
 procedure piscina(var arch:f_estancia);
