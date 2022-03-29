@@ -1,13 +1,17 @@
 unit arch_estancias;
 
 // notas
-{realizar:archivo provincias y listados}
+{realizar:listados,ordenamiento nombre, inicializar registros}
 interface
 type
     reg_estancia=record
-        id,nombre,dueno,email,caract,cod_prov:string;
+        id,nombre,dueno,email,caract:string;
         dni,tel:longint;
         capacidad,piscina:integer;
+        domicilio:record
+            ciudad,calle:string;
+            num,piso,cp:integer;
+        end;
         estado:boolean;
     end;
     f_estancia=file of reg_estancia;
@@ -74,7 +78,7 @@ begin
 end;
 
 procedure mostrar_estancia(estancia:reg_estancia); {muestra los datos de la estancia}
-begin
+begin 
     with estancia do
         begin   
             gotoxy(20,5);writeln('Id de la estancia: ',estancia.id);
@@ -86,7 +90,12 @@ begin
             gotoxy(20,11);writeln('Caracteristicas de la estancia: ',estancia.caract);
             gotoxy(20,12);writeln('Piscinas que posee la estancia: ',estancia.piscina);
             gotoxy(20,13);writeln('Capcidad que posee la estancia: ',estancia.capacidad);
-            gotoxy(20,17);writeln('- Pulse cualquier tecla para continuar -');readkey;clrscr;
+            gotoxy(20,14);writeln('Ciudad: ',estancia.domicilio.ciudad); 
+            gotoxy(20,15);writeln('Calle: ',estancia.domicilio.calle);
+            gotoxy(20,16);writeln('Numero: ',estancia.domicilio.num);
+            gotoxy(20,17);writeln('Piso: ',estancia.domicilio.piso);
+            gotoxy(20,18);writeln('CP: ',estancia.domicilio.cp);
+            gotoxy(20,20);writeln('- Pulse cualquier tecla para continuar -');readkey;clrscr;
         end;
 end;
 
@@ -129,7 +138,7 @@ end;
 procedure alta_estancia(var arch:f_estancia);
 var
     reg,estancia:reg_estancia;
-    i,x,valdni,valtel,valcap,valpisc:integer;
+    i,x,valdni,valtel,valcap,valpisc,valnum,valpiso,valcp:integer;
     opcion:char;
 begin
     clrscr;
@@ -145,6 +154,11 @@ begin
     gotoxy(23,11);writeln('Cantidad de piscinas:');
     gotoxy(23,12);writeln('Capacidad:');
     gotoxy(23,13);writeln('Caracteristicas:');
+    gotoxy(23,14);writeln('Ciudad:');
+    gotoxy(23,15);writeln('Calle:');
+    gotoxy(23,16);writeln('Numero:');
+    gotoxy(23,17);writeln('Piso:');
+    gotoxy(23,18);writeln('CP:');
     gotoxy(26,5);readln(estancia.id);
     i:=busqueda_id_estancia(arch,estancia.id);
     if i=-1 then
@@ -165,18 +179,18 @@ begin
                         if (x>-1) then
                             begin
                                 textcolor(12);
-                                gotoxy(20,16);writeln('El DNI ingresado ya existe, intente nuevamente.');
+                                gotoxy(20,20);writeln('El DNI ingresado ya existe, intente nuevamente.');
                                 delay(1800);
-                                gotoxy(20,16);writeln('                                               ');
+                                gotoxy(20,20);writeln('                                               ');
                                 textcolor(15);
                             end;
                     end
                 else
                     begin
                         textcolor(12);
-                        gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                         delay(1800);
-                        gotoxy(20,16);writeln('                                                             ');
+                        gotoxy(20,20);writeln('                                                             ');
                         textcolor(15);
                     end;
             until (x=-1) and (valdni=0);
@@ -194,9 +208,9 @@ begin
                 else
                     begin
                         textcolor(12);
-                        gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                         delay(1800);
-                        gotoxy(20,16);writeln('                                                           ');
+                        gotoxy(20,20);writeln('                                                           ');
                         textcolor(15);
                     end;
             until(valtel=0);
@@ -213,9 +227,9 @@ begin
                 else
                     begin
                         textcolor(12);
-                        gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                         delay(1800);
-                        gotoxy(20,16);writeln('                                                           ');
+                        gotoxy(20,20);writeln('                                                           ');
                         textcolor(15);
                     end;
             until(valpisc=0);
@@ -232,16 +246,70 @@ begin
                 else
                     begin
                         textcolor(12);
-                        gotoxy(20,16);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
                         delay(1800);
-                        gotoxy(20,16);writeln('                                                             ');
+                        gotoxy(20,20);writeln('                                                             ');
                         textcolor(15);
                     end;
             until(valcap=0);
             gotoxy(39,13);readln(estancia.caract);
-            {se cargan los datos del domicilio}
-            cargar_provincia(file_provincia);
-            estancia.cod_prov:=provincia.id;
+            gotoxy(30,14);readln(estancia.domicilio.ciudad);
+            gotoxy(29,15);readln(estancia.domicilio.calle);
+            repeat
+                gotoxy(30,16);
+                writeln('                       ');
+                gotoxy(30,16);
+                {$I-}readln(estancia.domicilio.num);{$I+}
+                valnum:=ioresult();
+                if valnum=0 then
+                    begin
+                        break
+                    end
+                else
+                    begin
+                        textcolor(12);
+                        gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        delay(1800);
+                        gotoxy(20,20);writeln('                                                           ');textcolor(15);
+                    end;
+            until(valnum=0);
+            repeat
+                gotoxy(28,17);
+                writeln('                           ');
+                gotoxy(28,17);
+                {$I-}readln(estancia.domicilio.piso);{$I+}
+                valpiso:=ioresult();
+                if valpiso=0 then
+                    begin
+                        break
+                    end
+                else
+                    begin
+                        textcolor(12);
+                        gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        delay(1800);
+                        gotoxy(20,20);writeln('                                                           ');textcolor(15);
+                    end;
+            until(valpiso=0);
+            repeat
+                gotoxy(26,18);
+                writeln('                           ');
+                gotoxy(26,18);
+                {$I-}readln(estancia.domicilio.cp);{$I+}
+                valcp:=ioresult();
+                if valcp=0 then
+                    begin
+                        break
+                    end
+                else
+                    begin
+                        textcolor(12);
+                        gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        delay(1800);
+                        gotoxy(20,20);writeln('                                                           ');textcolor(15);
+                    end;
+            until(valcp=0);
+            alta_provincia(file_provincia);
             estancia.estado:=true;
             guardar_estancia(arch,estancia,filesize(arch));
             clrscr;
@@ -319,10 +387,11 @@ begin
     close(arch);
 end;
 
+{agregar ciudad calle numero piso}
 procedure modificar_estancia(var arch:f_estancia);
 var
     id:string;
-    i,valdni,valtel,valpisc,valcap:integer;
+    i,valdni,valtel,valpisc,valcap,valnum,valpiso,valcp:integer;
     estancia:reg_estancia;
 begin
     abrir_estancia(arch);
@@ -341,7 +410,7 @@ begin
             if estancia.estado then
                 begin
                     clrscr;
-                    gotoxy(23,3);writeln('Ingrese los nuevos datos de la estancia:');
+                    gotoxy(23,3);writeln('Ingrese los nuevos datos de la estancia');
                     gotoxy(23,6);writeln('Nombre:');
                     gotoxy(23,7);writeln('Dueño:');
                     gotoxy(23,8);writeln('DNI:');
@@ -350,6 +419,11 @@ begin
                     gotoxy(23,11);writeln('Cantidad de piscinas:');
                     gotoxy(23,12);writeln('Capacidad:');
                     gotoxy(23,13);writeln('Caracteristicas:');
+                    gotoxy(23,14);writeln('Ciudad:');
+                    gotoxy(23,15);writeln('Calle:');
+                    gotoxy(23,16);writeln('Numero:');
+                    gotoxy(23,17);writeln('Piso:');
+                    gotoxy(23,18);writeln('CP:');
                     gotoxy(30,6);readln(estancia.nombre); 
                     gotoxy(29,7);readln(estancia.dueno);         
                     repeat
@@ -426,6 +500,62 @@ begin
                             end;
                     until valcap=0;
                     gotoxy(39,13);readln(estancia.caract);
+                    gotoxy(30,14);readln(estancia.domicilio.ciudad);
+                    gotoxy(29,15);readln(estancia.domicilio.calle);
+                    repeat
+                        gotoxy(30,16);
+                        writeln('                       ');
+                        gotoxy(30,16);
+                        {$I-}readln(estancia.domicilio.num);{$I+}
+                        valnum:=ioresult();
+                        if valnum=0 then
+                            begin
+                                break
+                            end
+                        else
+                            begin
+                                textcolor(12);
+                                gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                                delay(1800);
+                                gotoxy(20,20);writeln('                                                           ');textcolor(15);
+                            end;
+                    until(valnum=0);
+                    repeat
+                        gotoxy(28,17);
+                        writeln('                           ');
+                        gotoxy(28,17);
+                        {$I-}readln(estancia.domicilio.piso);{$I+}
+                        valpiso:=ioresult();
+                        if valpiso=0 then
+                            begin
+                                break
+                            end
+                        else
+                            begin
+                                textcolor(12);
+                                gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                                delay(1800);
+                                gotoxy(20,20);writeln('                                                           ');textcolor(15);
+                            end;
+                    until(valpiso=0);
+                    repeat
+                        gotoxy(26,18);
+                        writeln('                           ');
+                        gotoxy(26,18);
+                        {$I-}readln(estancia.domicilio.cp);{$I+}
+                        valcp:=ioresult();
+                        if valcp=0 then
+                            begin
+                                break
+                            end
+                        else
+                            begin
+                                textcolor(12);
+                                gotoxy(20,20);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                                delay(1800);
+                                gotoxy(20,20);writeln('                                                           ');textcolor(15);
+                            end;
+                    until(valcp=0);
                     i:=filepos(arch) - 1;
                     guardar_estancia(arch,estancia,i);
                     clrscr;
