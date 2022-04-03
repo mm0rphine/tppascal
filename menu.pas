@@ -11,6 +11,10 @@ procedure borrar;
 
 implementation
 
+var
+    file_estancia:f_estancia;
+    file_provincia:f_provincia;
+
 procedure principal;
 var
     i,x,y:integer;
@@ -206,4 +210,4 @@ begin
                 principal;
             end;
 end;
-end.
+end.o

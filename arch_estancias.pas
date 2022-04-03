@@ -1,7 +1,7 @@
 unit arch_estancias;
 
 // notas
-{realizar:listados,ordenamiento nombre, inicializar registros}
+{realizar:listados,ordenamiento nombre}
 interface
 type
     reg_estancia=record
@@ -17,8 +17,6 @@ type
     f_estancia=file of reg_estancia;
 const 
     nombre='estancias.dat';
-var
-    file_estancia:f_estancia;
 
 procedure crear_estancia(var arch:f_estancia);
 procedure abrir_estancia(var arch:f_estancia);
@@ -36,7 +34,7 @@ procedure pulsartecla;
 
 implementation
 uses
-    crt,arch_provincias;
+    crt;
 
 procedure crear_estancia(var arch:f_estancia);
 begin
@@ -95,7 +93,7 @@ begin
             gotoxy(20,16);writeln('Numero: ',estancia.domicilio.num);
             gotoxy(20,17);writeln('Piso: ',estancia.domicilio.piso);
             gotoxy(20,18);writeln('CP: ',estancia.domicilio.cp);
-            gotoxy(20,20);writeln('- Pulse cualquier tecla para continuar -');readkey;clrscr;
+            gotoxy(20,21);writeln('- Pulse cualquier tecla para continuar -');readkey;clrscr;
         end;
 end;
 
@@ -309,7 +307,6 @@ begin
                         gotoxy(20,20);writeln('                                                           ');textcolor(15);
                     end;
             until(valcp=0);
-            alta_provincia(file_provincia);
             estancia.estado:=true;
             guardar_estancia(arch,estancia,filesize(arch));
             clrscr;

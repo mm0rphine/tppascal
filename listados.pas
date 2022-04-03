@@ -2,7 +2,7 @@ unit listados;
 
 interface
 uses
-    crt,arch_estancias;
+    crt,arch_estancias,arch_provincias;
 
 procedure piscina(var arch:f_estancia);
 
