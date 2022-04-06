@@ -1,11 +1,11 @@
 unit arch_estancias;
 
 // notas
-{realizar:listados,ordenamiento nombre}
+{terminar archivo provincias}
 interface
 type
     reg_estancia=record
-        id,nombre,dueno,email,caract:string;
+        id,nombre,dueno,email,caract,cpcia:string;
         dni,tel:longint;
         capacidad,piscina:integer;
         domicilio:record
@@ -29,12 +29,13 @@ procedure alta_estancia(var arch:f_estancia);
 procedure baja_estancia(var arch:f_estancia);
 procedure modificar_estancia(var arch:f_estancia);
 procedure consultar_estancia(var arch:f_estancia);
-procedure eliminar(var arch:f_estancia);
+procedure ordenar(var arch:f_estancia); {orden alfabetico de las estancias}
+procedure eliminar_estancia(var arch:f_estancia);
 procedure pulsartecla;
 
 implementation
 uses
-    crt;
+    crt,arch_provincias;
 
 procedure crear_estancia(var arch:f_estancia);
 begin
@@ -136,11 +137,14 @@ end;
 procedure alta_estancia(var arch:f_estancia);
 var
     reg,estancia:reg_estancia;
+    r_provincia:reg_provincia;
+    archivo_provincias:f_provincia;
     i,x,valdni,valtel,valcap,valpisc,valnum,valpiso,valcp:integer;
     opcion:char;
 begin
     clrscr;
     abrir_estancia(arch);
+    abrir_provincia(archivo_provincias);
     textcolor(15);
     gotoxy(23,3);writeln('Ingese los datos de la estancia a dar de alta');
     gotoxy(23,5);writeln('Id:');
@@ -307,8 +311,19 @@ begin
                         gotoxy(20,20);writeln('                                                           ');textcolor(15);
                     end;
             until(valcp=0);
+            {cargar datos de la provincia}
+            clrscr;
+            gotoxy(23,3);writeln('Ingrese los datos de la provincia donde se encuntra la estancia');
+            gotoxy(23,5);writeln('Cod. Provincia:');
+            gotoxy(23,6);writeln('Denominacion:');
+            gotoxy(23,7);writeln('Tel. Min. Turismo:');
+            gotoxy(38,5);readln(r_provincia.cod);
+            gotoxy(40,6);readln(r_provincia.denom);
+            gotoxy(45,7);readln(r_provincia.telmt);
+            estancia.cpcia:=r_provincia.cod;
             estancia.estado:=true;
             guardar_estancia(arch,estancia,filesize(arch));
+            guardar_provincia(archivo_provincias,r_provincia,filesize(archivo_provincias));
             clrscr;
             textcolor(10);gotoxy(20,6);writeln('La estancia fue dada de alta.');textcolor(15);
             pulsartecla;
@@ -349,6 +364,7 @@ begin
                 end;
         end;
     close(arch);
+    close(archivo_provincias);
 end;
 
 procedure baja_estancia(var arch:f_estancia);
@@ -384,7 +400,6 @@ begin
     close(arch);
 end;
 
-{agregar ciudad calle numero piso}
 procedure modificar_estancia(var arch:f_estancia);
 var
     id:string;
@@ -605,7 +620,36 @@ begin
     close(arch);
 end;
 
-procedure eliminar(var arch:f_estancia);
+procedure ordenar(var arch:f_estancia);
+var
+    estancia,aux_estancia,tmp:reg_estancia;
+    i,j:integer;
+begin
+    abrir_estancia(arch); 
+    for i:= 0 to filesize(arch)-1 do
+        begin
+            seek(arch,i);
+            read(arch,estancia);
+            for j:=filesize(arch) - 1 downto i + 1 do 
+                begin
+                    seek(arch,j);
+                    read(arch,aux_estancia);
+                    if estancia.nombre>aux_estancia.nombre then
+                        begin
+                            tmp:=estancia;
+                            estancia:=aux_estancia;
+                            aux_estancia:=tmp;
+                            seek(arch,i);
+                            write(arch,estancia);
+                            seek(arch,j);
+                            write(arch,aux_estancia);
+                        end;
+                end;
+        end;
+    close(arch);
+end;
+
+procedure eliminar_estancia(var arch:f_estancia);
 begin
     erase(arch);
 end;
