@@ -17,45 +17,19 @@ var
 
 procedure principal;
 var
-    i,x,y:integer;
     opcion:char;
 begin
     crear_estancia(file_estancia);
     crear_provincia(file_provincia);
     repeat
         clrscr;
-        x:=14;
-        y:=1;
-       for i:=1 to 11 do
-            begin
-                textcolor(15);
-                gotoxy(x,y);writeln('.');y:=y+1;
-            end;
-        x:=16;
-        y:=1;
-        for i:=1 to 14 do
-            begin
-                gotoxy(x,y);writeln('.');x:=x+2;
-            end;
-        x:=42;
-        y:=2;
-        for i:= 1 to 10 do
-            begin
-                gotoxy(x,y);writeln('.');y:=y+1;
-            end;
-        x:=16;
-        y:=11;
-        for i:=1 to 13 do
-            begin
-                gotoxy(x,y);writeln('.');x:=x+2;
-            end;
         textcolor(15);
-        gotoxy(22,3);writeln('Menu Principal');
-        gotoxy(20,5);writeln('1 ABMC');
-        gotoxy(20,6);writeln('2 Listados');
-        gotoxy(20,7);writeln('3 Borrar archivos');
-        gotoxy(20,8);writeln('4 Salir');
-        gotoxy(20,10);writeln('Elija una opcion');
+        gotoxy(22,3);writeln(' ~ Menu Principal ~ ');
+        gotoxy(26,5);writeln('1 ABMC');
+        gotoxy(26,6);writeln('2 Listados');
+        gotoxy(26,7);writeln('3 Borrar archivos');
+        gotoxy(26,8);writeln('4 Salir');
+        gotoxy(24,10);writeln('Elija una opcion');
         repeat
             opcion:=readkey;
         until opcion in ['1'..'4'];
@@ -75,44 +49,18 @@ end;
 
 procedure abmc;
 var
-   i,x,y:integer;
    opcion:char;
 begin
     repeat
         clrscr;
-        x:=15;
-        y:=2;
-        for i:=1 to 12 do
-            begin
-                textcolor(15);
-                gotoxy(x,y);writeln('.');y:=y+1;
-            end;
-        x:=17;
-        y:=2;
-        for i:=1 to 17 do
-            begin
-                gotoxy(x,y);writeln('.');x:=x+2;
-            end;
-        x:=51;
-        y:=2;
-        for i:= 1 to 12 do
-            begin
-                gotoxy(x,y);writeln('.');y:=y+1;
-            end;
-        x:=17;
-        y:=13;
-        for i:=1 to 17 do
-            begin
-                gotoxy(x,y);writeln('.');x:=x+2;
-            end;
         textcolor(15);
-        gotoxy(29,4);writeln('Menu ABMC');
-        gotoxy(20,6);writeln('1 Dar de alta una estancia');
-        gotoxy(20,7);writeln('2 Dar de baja una estancia');
-        gotoxy(20,8);writeln('3 Modificar una estancia');
-        gotoxy(20,9);writeln('4 Consultar una estancia');
-        gotoxy(20,10);writeln('5 Volver al menu principal');
-        gotoxy(25,12);writeln('ELija una opcion');
+        gotoxy(29,4);writeln('~ Menu ABMC ~');
+        gotoxy(23,6);writeln('1 Dar de alta una estancia');
+        gotoxy(23,7);writeln('2 Dar de baja una estancia');
+        gotoxy(23,8);writeln('3 Modificar una estancia');
+        gotoxy(23,9);writeln('4 Consultar una estancia');
+        gotoxy(23,10);writeln('5 Volver al menu principal');
+        gotoxy(27,12);writeln('ELija una opcion');
         repeat
             opcion:=readkey;
         until opcion in ['1'..'5'];
@@ -133,49 +81,23 @@ end;
 procedure listados;
 var
     opcion:char;
-    x,y,i:integer;
 begin
     repeat 
         clrscr;
-        x:=17;
-        y:=2;
-        for i:=1 to 11 do
-            begin
-                textcolor(15);
-                gotoxy(x,y);writeln('.');y:=y+1;
-            end;
-        x:=19;
-        y:=2;
-        for i:=1 to 21 do
-            begin
-                gotoxy(x,y);writeln('.');x:=x+2;
-            end;
-        x:=59;
-        y:=3;
-        for i:= 1 to 10 do
-           begin
-                gotoxy(x,y);writeln('.');y:=y+1;
-            end;
-        x:=19;
-        y:=12;
-        for i:=1 to 20 do
-            begin
-                gotoxy(x,y);writeln('.');x:=x+2;
-            end;
         textcolor(15);
-        gotoxy(30,4);writeln('Menu Listados');
-        gotoxy(20,6);writeln('1 Listado de estancias por nombre');
-        gotoxy(20,7);writeln('2 Listado de estancias por provincia');
-        gotoxy(20,8);writeln('3 Estancias que poseen piscinas');
-        gotoxy(20,9);writeln('4 Volver al menu principal');
-        gotoxy(29,11);writeln('Elija una opcion');
+        gotoxy(30,4);writeln('~ Menu Listados ~');
+        gotoxy(23,6);writeln('1 Listado de estancias por nombre');
+        gotoxy(23,7);writeln('2 Listado de estancias por provincia');
+        gotoxy(23,8);writeln('3 Estancias que poseen piscinas');
+        gotoxy(23,9);writeln('4 Volver al menu principal');
+        gotoxy(30,11);writeln('Elija una opcion');
         repeat
             opcion:=readkey;
         until opcion in ['1'..'4'];
         clrscr;
         case opcion of
-        '1':clrscr;
-        '2':clrscr;
+        '1':nombre(file_estancia);
+        '2':provincia(file_estancia);
         '3':piscina(file_estancia);
         end
     until opcion='4';
@@ -197,7 +119,8 @@ begin
         until opcion in ['s','n'];
         if opcion = 's' then
             begin
-                eliminar(file_estancia);
+                eliminar_estancia(file_estancia);
+                eliminar_provincia(file_provincia);
                 clrscr;
                 gotoxy(23,3);writeln('Borrando archivos..');
                 delay(1500);
@@ -210,4 +133,4 @@ begin
                 principal;
             end;
 end;
-end.o
+end.
