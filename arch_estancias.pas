@@ -108,7 +108,10 @@ begin
     while (not eof(arch)) and (not encontrado) do
         begin
             read(arch,estancia);
-            encontrado:=estancia.id = buscado
+            if estancia.id = buscado then
+                begin
+                    encontrado:=true;
+                end;
         end;
         if encontrado then
             busqueda_id_estancia:=filepos(arch) - 1
@@ -126,7 +129,10 @@ begin
     while (not eof(arch)) and (not encontrado) do
         begin
             read(arch,estancia);
-            encontrado:=estancia.dni = buscado
+            if estancia.dni = buscado then
+                begin
+                    encontrado:=true;
+                end;
         end;
         if encontrado then
             busqueda_dni:=filepos(arch) - 1
@@ -318,8 +324,8 @@ begin
             gotoxy(23,6);writeln('Denominacion:');
             gotoxy(23,7);writeln('Tel. Min. Turismo:');
             gotoxy(38,5);readln(r_provincia.cod);
-            gotoxy(40,6);readln(r_provincia.denom);
-            gotoxy(45,7);readln(r_provincia.telmt);
+            gotoxy(36,6);readln(r_provincia.denom);
+            gotoxy(41,7);readln(r_provincia.telmt);
             estancia.cpcia:=r_provincia.cod;
             estancia.estado:=true;
             guardar_estancia(arch,estancia,filesize(arch));
@@ -630,7 +636,7 @@ begin
         begin
             seek(arch,i);
             read(arch,estancia);
-            for j:=filesize(arch) - 1 downto i + 1 do 
+            for j:=filesize(arch)-1 downto i do
                 begin
                     seek(arch,j);
                     read(arch,aux_estancia);
