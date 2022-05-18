@@ -97,7 +97,7 @@ begin
         clrscr;
         case opcion of
         '1':nombre(file_estancia);
-        '2':provincia(file_estancia);
+        '2':provincia(file_estancia); {provincia}
         '3':piscina(file_estancia);
         end
     until opcion='4';

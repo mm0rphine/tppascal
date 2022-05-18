@@ -6,28 +6,11 @@ uses
 
 procedure nombre(var arch:f_estancia);
 procedure piscina(var arch:f_estancia);
-function busqueda_provincia(var arch:f_estancia;buscado:string):integer; {por codigo de la provincia}
 procedure provincia(var arch:f_estancia);
 
 implementation
-
-function busqueda_provincia(var arch:f_estancia;buscado:string):integer;
-var
-    encontrado:boolean;
-    estancia:reg_estancia;
-begin
-    encontrado:=false;
-    seek(arch,0);
-    while (not eof(arch)) and (not encontrado) do
-        begin
-            read(arch,estancia);
-            encontrado:=estancia.cpcia = buscado
-        end;
-    if encontrado then
-        busqueda_provincia:=filepos(arch)-1
-    else
-        busqueda_provincia:=-1;
-end;
+uses
+    busquedas;
 
 procedure provincia(var arch:f_estancia);
 var
@@ -38,10 +21,11 @@ begin
     abrir_estancia(arch);
     clrscr;gotoxy(23,3);writeln('Ingrese el codigo de la provincia:');
     gotoxy(57,3);readln(codigo);
-    i:=busqueda_provincia(arch,codigo);
+    i:=busqueda_cod_pcia(arch,codigo);
     if i=-1 then
         begin
-            clrscr;gotoxy(23,3);writeln('No hay una provincia con este codigo.');pulsartecla;
+            clrscr;gotoxy(20,6);textcolor(12);writeln('No hay una provincia con este codigo.');pulsartecla;
+            textcolor(15);
         end
     else
         begin
@@ -49,7 +33,7 @@ begin
             for j:=0 to filesize(arch)-1 do
                 begin
                     leer_estancia(arch,estancia,j);
-                    if (estancia.estado) and (estancia.cpcia=codigo) then
+                    if (estancia.estado) and (estancia.domicilio.cpcia=codigo) then
                         begin
                             mostrar_estancia(estancia);
                         end;
