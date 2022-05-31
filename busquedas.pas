@@ -8,6 +8,8 @@ uses
 function busqueda_id_estancia(var arch:f_estancia;buscado:string):integer;
 function busqueda_dni(var arch:f_estancia;buscado:longint):integer;
 function busqueda_cod_pcia(var arch:f_estancia;buscado:string):integer;
+function buscar_cod_pcia(var arch:f_provincia;buscado:string):integer;
+function buscar_denom_pcia(var arch:f_provincia;buscado:string):integer;
 
 implementation
 
@@ -73,6 +75,49 @@ begin
         else
             busqueda_cod_pcia:=-1;
 end;
+
+function buscar_cod_pcia(var arch:f_provincia;buscado:string):integer;
+var
+    provincia:reg_provincia;
+    encontrado:boolean;
+begin
+    encontrado:=false;
+    seek(arch,0);
+    while (not eof(arch)) and (not encontrado) do 
+        begin
+            read(arch,provincia);
+            if provincia.cod=buscado then
+                begin
+                    encontrado:=true;
+                end;
+        end;
+    if encontrado then
+        buscar_cod_pcia:=filepos(arch) - 1
+    else
+        buscar_cod_pcia:=-1;
+end;
+
+function buscar_denom_pcia(var arch:f_provincia;buscado:string):integer;
+var
+    encontrado:boolean;
+    provincia:reg_provincia;
+begin
+    encontrado:=false;
+    seek(arch,0);
+    while (not eof(arch)) and (not encontrado) do 
+        begin
+            read(arch,provincia);
+            if provincia.denom = buscado then
+                begin
+                    encontrado:=true;
+                end;
+        end;
+    if encontrado then
+        buscar_denom_pcia:=filepos(arch) - 1
+    else
+        buscar_denom_pcia:=-1;
+end;
+
 end.
 
 

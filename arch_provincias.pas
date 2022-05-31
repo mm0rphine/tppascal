@@ -53,15 +53,58 @@ begin
 end;
 
 procedure alta_provincia(var arch:f_provincia;var reg:reg_provincia);
+var
+    i,x:integer;
 begin
     clrscr;
     gotoxy(23,3);writeln('Ingrese los datos de la provincia donde se encuentra la estancia');
     gotoxy(23,5);writeln('Cod. Provincia:');
-    gotoxy(23,6);writeln('Denominacion:');
+    gotoxy(23,6);writeln('Denoominacion:');
     gotoxy(23,7);writeln('Tel. Min. Turismo:');
-    gotoxy(39,5);readln(reg.cod);
-    gotoxy(37,6);readln(reg.denom);
-    gotoxy(37,7);readln(reg.telmt);
+    gotoxy(40,5);readln(reg.cod);
+    i:=buscar_cod_pcia(arch,reg.cod);
+    if i=-1 then
+        begin
+            repeat
+                gotoxy(37,6);
+                writeln('                     ');
+                gotoxy(37,6);
+                readln(reg.denom);
+                x:=buscar_denom_pcia(arch,reg.denom);         
+                if (x<>-1) then
+                    begin
+                        textcolor(12);
+                        gotoxy(20,15);writeln('Esta provincia ya tiene un codigo asignado, intente nuevamente.');
+                        delay(1800);
+                        gotoxy(20,15);writeln('                                                               '); 
+                        textcolor(15); 
+                    end;
+            until(x=-1);
+            gotoxy(42,7);readln(reg.telmt);
+        end
+    else
+        begin
+            clrscr;
+            gotoxy(23,4);writeln('El id de la provincia ya existe, ingrese los datos restantes:');
+            gotoxy(23,6);writeln('Denoominacion:');
+            gotoxy(23,7);writeln('Tel. Min. Turismo:');
+            repeat
+                gotoxy(37,6);
+                writeln('                     ');
+                gotoxy(37,6);
+                readln(reg.denom);
+                x:=buscar_denom_pcia(arch,reg.denom);
+                if (x=-1) then
+                    begin
+                        textcolor(12);
+                        gotoxy(20,15);writeln('Esta no es la provincia que tiene este codigo, intente nuevamente.');
+                        delay(1800);
+                        gotoxy(20,15);writeln('                                                                  ');
+                        textcolor(15);
+                    end;
+            until(x<>-1);
+            gotoxy(42,7);readln(reg.telmt);
+        end;                                     
 end;
 
 procedure eliminar_provincia(var arch:f_provincia);
