@@ -5,7 +5,6 @@ type
     reg_provincia=record
         denom,cod:string;
         telmt:longint;
-        estado:boolean;
     end;
     f_provincia=file of reg_provincia;
 const
