@@ -8,8 +8,8 @@ uses
 function busqueda_id_estancia(var arch:f_estancia;buscado:string):integer;
 function busqueda_dni(var arch:f_estancia;buscado:longint):integer;
 function busqueda_cod_pcia(var arch:f_estancia;buscado:string):integer;
-function buscar_cod_pcia(var arch:f_provincia;buscado:string):integer;
-function buscar_denom_pcia(var arch:f_provincia;buscado:string):integer;
+function buscar_cod_pcia(var arch:f_provincia;buscado:string):integer; {para buscar en el alta provincia}
+function buscar_denom_pcia(var arch:f_provincia;buscado:string):integer; {alta provincia}
 
 implementation
 

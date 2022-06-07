@@ -112,7 +112,7 @@ begin
     gotoxy(23,3);writeln('Ingrese los datos de la estancia a dar de alta');
     gotoxy(23,5);writeln('Id:');
     gotoxy(23,6);writeln('Nombre:'); 
-    gotoxy(23,7);writeln('Dueño:');
+    gotoxy(23,7);writeln('Dueno:');
     gotoxy(23,8);writeln('DNI:');
     gotoxy(23,9);writeln('Email:');
     gotoxy(23,10);writeln('Tel:');
@@ -380,7 +380,7 @@ begin
                     clrscr;
                     gotoxy(23,3);writeln('Ingrese los nuevos datos de la estancia');
                     gotoxy(23,6);writeln('Nombre:');
-                    gotoxy(23,7);writeln('Dueño:');
+                    gotoxy(23,7);writeln('Dueno:');
                     gotoxy(23,8);writeln('DNI:');
                     gotoxy(23,9);writeln('Email:');
                     gotoxy(23,10);writeln('Tel:');

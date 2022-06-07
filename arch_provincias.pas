@@ -53,14 +53,14 @@ end;
 
 procedure alta_provincia(var arch:f_provincia;var reg:reg_provincia);
 var
-    i,x:integer;
+    i,x,validacion:integer;
 begin
     clrscr;
     gotoxy(23,3);writeln('Ingrese los datos de la provincia donde se encuentra la estancia');
     gotoxy(23,5);writeln('Cod. Provincia:');
     gotoxy(23,6);writeln('Denoominacion:');
     gotoxy(23,7);writeln('Tel. Min. Turismo:');
-    gotoxy(40,5);readln(reg.cod);
+    gotoxy(38,5);readln(reg.cod);
     i:=buscar_cod_pcia(arch,reg.cod);
     if i=-1 then
         begin
@@ -79,7 +79,21 @@ begin
                         textcolor(15); 
                     end;
             until(x=-1);
-            gotoxy(42,7);readln(reg.telmt);
+            repeat
+                gotoxy(41,7);
+                writeln('                      ');
+                gotoxy(41,7);
+                {$I-}readln(reg.telmt);{$I+}
+                validacion:=ioresult();
+                if validacion<>0 then
+                    begin
+                        textcolor(12);
+                        gotoxy(20,10);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        delay(1900);
+                        gotoxy(20,10);writeln('                                                           ');
+                        textcolor(15);
+                    end
+            until(validacion=0);
         end
     else
         begin
@@ -96,13 +110,27 @@ begin
                 if (x=-1) then
                     begin
                         textcolor(12);
-                        gotoxy(20,15);writeln('Esta no es la provincia que tiene este codigo, intente nuevamente.');
-                        delay(1800);
-                        gotoxy(20,15);writeln('                                                                  ');
+                        gotoxy(20,10);writeln('Esta no es la provincia que tiene este codigo, intente nuevamente.');
+                        delay(1900);
+                        gotoxy(20,10);writeln('                                                                  ');
                         textcolor(15);
                     end;
             until(x<>-1);
-            gotoxy(42,7);readln(reg.telmt);
+            repeat
+                gotoxy(41,7);
+                writeln('                      ');
+                gotoxy(41,7);
+                {$I-}readln(reg.telmt);{$I+}
+                validacion:=ioresult();
+                if validacion<>0 then
+                    begin
+                        textcolor(12);
+                        gotoxy(20,10);writeln('El tipo de dato ingresado no es valido, intente nuevamente.');
+                        delay(1800);
+                        gotoxy(20,10);writeln('                                                           ');
+                        textcolor(15);
+                    end
+            until(validacion=0);
         end;                                     
 end;
 
