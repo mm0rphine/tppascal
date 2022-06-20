@@ -359,7 +359,7 @@ end;
 procedure modificar_estancia(var arch:f_estancia);
 var
     id:string;
-    i,valdni,valtel,valpisc,valcap,valnum,valpiso,valcp:integer;
+    i,valido:integer;
     estancia:reg_estancia;
 begin
     abrir_estancia(arch);
@@ -401,8 +401,8 @@ begin
                         {$I-}
                             readln(estancia.dni);
                         {$I+}
-                        valdni:=ioresult();
-                        if valdni=0 then
+                        valido:=ioresult();
+                        if valido=0 then
                             begin
                                 break
                             end
@@ -414,13 +414,13 @@ begin
                                 gotoxy(20,16);writeln('                                                           ');
                                 textcolor(15);
                             end;
-                    until (valdni=0);
+                    until (valido=0);
                     gotoxy(29,9);readln(estancia.email);
                     repeat
                         gotoxy(27,10);writeln('                     ');
                         gotoxy(27,10);{$I-}readln(estancia.tel);{$I+}
-                        valtel:=ioresult();
-                        if valtel=0 then
+                        valido:=ioresult();
+                        if valido=0 then
                             begin
                                 break
                             end
@@ -432,12 +432,12 @@ begin
                                 gotoxy(20,16);writeln('                                                           ');
                                 textcolor(15);
                             end;
-                    until (valtel=0); 
+                    until (valido=0); 
                     repeat
                         gotoxy(44,11);writeln('           ');
                         gotoxy(44,11);{$I-}readln(estancia.piscina);{$I+}
-                        valpisc:=ioresult();
-                        if valpisc=0 then
+                        valido:=ioresult();
+                        if valido=0 then
                             begin
                                 break
                             end
@@ -449,12 +449,12 @@ begin
                                 gotoxy(20,16);writeln('                                                           ');
                                 textcolor(15);
                             end;
-                    until (valpisc=0);
+                    until (valido=0);
                     repeat
                         gotoxy(33,12);writeln('               ');
                         gotoxy(33,12);{$I-}readln(estancia.capacidad);{$I+}
-                        valcap:=ioresult();
-                        if valcap=0 then
+                        valido:=ioresult();
+                        if valido=0 then
                             begin
                                 break
                             end
@@ -466,7 +466,7 @@ begin
                                 gotoxy(20,16);writeln('                                                             ');
                                 textcolor(15);
                             end;
-                    until valcap=0;
+                    until valido=0;
                     gotoxy(39,13);readln(estancia.caract);
                     gotoxy(30,14);readln(estancia.domicilio.ciudad);
                     gotoxy(29,15);readln(estancia.domicilio.calle);
@@ -475,8 +475,8 @@ begin
                         writeln('                       ');
                         gotoxy(30,16);
                         {$I-}readln(estancia.domicilio.num);{$I+}
-                        valnum:=ioresult();
-                        if valnum=0 then
+                        valido:=ioresult();
+                        if valido=0 then
                             begin
                                 break
                             end
@@ -487,14 +487,14 @@ begin
                                 delay(1800);
                                 gotoxy(20,20);writeln('                                                           ');textcolor(15);
                             end;
-                    until(valnum=0);
+                    until(valido=0);
                     repeat
                         gotoxy(28,17);
                         writeln('                           ');
                         gotoxy(28,17);
                         {$I-}readln(estancia.domicilio.piso);{$I+}
-                        valpiso:=ioresult();
-                        if valpiso=0 then
+                        valido:=ioresult();
+                        if valido=0 then
                             begin
                                 break
                             end
@@ -505,14 +505,14 @@ begin
                                 delay(1800);
                                 gotoxy(20,20);writeln('                                                           ');textcolor(15);
                             end;
-                    until(valpiso=0);
+                    until(valido=0);
                     repeat
                         gotoxy(26,18);
                         writeln('                           ');
                         gotoxy(26,18);
                         {$I-}readln(estancia.domicilio.cp);{$I+}
-                        valcp:=ioresult();
-                        if valcp=0 then
+                        valido:=ioresult();
+                        if valido=0 then
                             begin
                                 break
                             end
@@ -523,7 +523,7 @@ begin
                                 delay(1800);
                                 gotoxy(20,20);writeln('                                                           ');textcolor(15);
                             end;
-                    until(valcp=0);
+                    until(valido=0);
                     i:=filepos(arch) - 1;
                     guardar_estancia(arch,estancia,i);
                     clrscr;
@@ -586,7 +586,7 @@ begin
         begin
             seek(arch,i);
             read(arch,estancia);
-            for j:=filesize(arch)-1 downto i+1 do
+            for j:=filesize(arch)-1 downto i do
                 begin
                     seek(arch,j);
                     read(arch,aux_estancia);
